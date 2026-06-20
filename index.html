@@ -234,4 +234,167 @@ principalmente nas quartas e sextas.
 Mesmo cansada,
 você continua sendo uma pessoa incrível.
 Tenho muito orgulho da mulher que você é.` 
+}, 
+{
+titulo:"Capítulo 5",
+texto:`Quero que você nunca esqueça de uma coisa:
+independente dos dias bons ou ruins,
+eu sempre vou estar ao seu lado.
+Você não precisa enfrentar tudo sozinha.
+Enquanto eu existir,
+vou cuidar de você da melhor forma que eu puder.`
 },
+
+{
+titulo:"Capítulo 6",
+texto:`Se existe um lugar onde meu coração encontra paz,
+esse lugar é quando estou com você.
+Meu maior desejo é construir lembranças,
+vencer desafios juntos
+e continuar escrevendo nossa história todos os dias. ❤️`
+}
+
+];
+
+let progresso=Number(localStorage.getItem("gaby_capitulo"))||0;
+
+const lista=document.getElementById("lista");
+const tela=document.getElementById("capitulo");
+
+function abrirMenu(){
+
+document.getElementById("inicio").style.display="none";
+document.getElementById("menu").style.display="block";
+
+carregar();
+
+}
+
+function carregar(){
+
+lista.innerHTML="";
+
+capitulos.forEach((c,i)=>{
+
+let b=document.createElement("button");
+
+b.innerHTML=c.titulo;
+
+if(i<=progresso){
+
+b.onclick=()=>abrirCapitulo(i);
+
+}else{
+
+b.className="bloqueado";
+b.innerHTML="🔒 "+c.titulo;
+
+}
+
+lista.appendChild(b);
+
+});
+
+}
+
+function abrirCapitulo(i){
+
+document.getElementById("menu").style.display="none";
+
+tela.style.display="block";
+
+let botao="";
+
+if(i<capitulos.length-1){
+
+botao=`<button onclick="proximo(${i})">
+Próximo capítulo ❤️
+</button>`;
+
+}else{
+
+botao=`<button onclick="mostrarFinal()">
+Ler carta final 💌
+</button>`;
+
+}
+
+tela.innerHTML=`
+<h2>${capitulos[i].titulo}</h2>
+
+<p style="margin-top:20px;">
+${capitulos[i].texto}
+</p>
+
+${botao}
+`;
+
+}
+
+function proximo(i){
+
+if(progresso<i+1){
+
+progresso=i+1;
+
+localStorage.setItem("gaby_capitulo",progresso);
+
+}
+
+tela.style.display="none";
+
+document.getElementById("menu").style.display="block";
+
+carregar();
+
+}
+
+function mostrarFinal(){
+
+tela.style.display="none";
+
+document.getElementById("final").style.display="block";
+
+localStorage.setItem("gaby_capitulo",5);
+
+}
+
+function reiniciar(){
+
+localStorage.removeItem("gaby_capitulo");
+
+location.reload();
+
+}
+
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+}
+
+resize();
+
+window.onresize=resize;
+
+const estrelas=[];
+
+for(let i=0;i<150;i++){
+
+estrelas.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+r:Math.random()*2,
+
+s:Math.random()*0.5+0.2
+
+});
+
+}
